@@ -1,2 +1,43 @@
-<div>Base input {{ baseInput }}</div>
-<div>Result {{ calcResult }}</div>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Calculator</title>
+    <link href="{{ asset('css/style.css') }}" rel="stylesheet"/>
+</head>
+<body>
+
+{% for error in errors %}
+    <div>Error: {{ error }}</div>
+{% endfor %}
+
+<div class="container">
+    <div class="calculator">
+        <form action="" method="post">
+            <input type="text" class="calcScreen calcScreen-top" name="input" id="calcInput" readonly value="{{ baseInput }}">
+            <input type="text" class="calcScreen calcScreen-bottom" name="result" id="calcResult" readonly value="{{ calcResult }}">
+
+            <button type="button" class="calcButton" value="7">7</button>
+            <button type="button" class="calcButton" value="8">8</button>
+            <button type="button" class="calcButton" value="9">9</button>
+            <button type="button" class="operator" value="/">/</button>
+            <button type="button" class="calcButton" value="4">4</button>
+            <button type="button" class="calcButton" value="5">5</button>
+            <button type="button" class="calcButton" value="6">6</button>
+            <button type="button" class="operator" value="*">x</button>
+            <button type="button" class="calcButton" value="1">1</button>
+            <button type="button" class="calcButton" value="2">2</button>
+            <button type="button" class="calcButton" value="3">3</button>
+            <button type="button" class="operator" value="+">+</button>
+            <button type="button" class="calcButton" value="0">0</button>
+            <button type="button" class="operator" value=".">.</button>
+            <button type="button" id="clear" class="function">AC</button>
+            <button type="button" class="operator" value="-">-</button>
+            <button type="submit" id="calcSubmit" class="function">=</button>
+        </form>
+    </div>
+</div>
+
+<script src="{{ asset('js/script.js') }}"></script>
+</body>
+</html>

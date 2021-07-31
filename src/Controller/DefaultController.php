@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Service\Calculator;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -13,31 +14,28 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
  */
 class DefaultController extends AbstractController
 {
-	// /**
-	//  * @return Response
-	//  */
-	// public function index(): Response {
-	// 	return $this->render('calculator.html.twig');
-	// }
+    /**
+     * @param Request $request
+     * @param Calculator $calculator
+     *
+     * @return Response
+     */
+    public function index(Request $request, Calculator $calculator): Response
+    {
+        //expression to be calculated submitted by the calculator
+        $postInput = $request->request->get('input');
 
-	/**
-	 * @param Calculator $calculator
-	 *
-	 * @return Response
-	 */
-	public function index(Calculator $calculator): Response {
+        $calResult = '';
+        if (!empty($postInput)) {
+            //we input the expression into the calculator and get the value
+            $calResult = $calculator->calculate($postInput);
+        }
+        $errors = $calculator->getErrors();
 
-		$postInput = '-2-11+21/-2/3*5';
-		$calResult = $calculator->calculate($postInput);
-		$errors = $calculator->getErrors();
-
-		$success = empty($errors);
-
-		// echo json_encode(['success' => $success, 'result' => $calResult, 'errors' => $errors])
-		return $this->render('calculator.html.twig', [
-			'success' => $success,
-			'calcResult' => $calResult,
-			'erros' => $errors,
-		]);
-	}
+        return $this->render('calculator.html.twig', [
+            'calcResult' => $calResult,
+            'baseInput' => $calculator->getInput(),
+            'errors' => $errors,
+        ]);
+    }
 }
